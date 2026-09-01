@@ -1,0 +1,20 @@
+{
+  "name": "athena-bda",
+  "interface": {
+    "displayName": "Athena BDA"
+  },
+  "plugins": [
+    {
+      "name": "athena",
+      "source": {
+        "source": "local",
+        "path": "./plugins/athena"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

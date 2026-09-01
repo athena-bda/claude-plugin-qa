@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "athena-contact-portal": {
+      "type": "http",
+      "url": "https://athena-qa-api.azurewebsites.net/mcp"
+    },
+    "athena-intelligence-hub": {
+      "type": "http",
+      "url": "https://vbwrebrltrrvijaslhes.supabase.co/functions/v1/mcp"
+    }
+  }
+}

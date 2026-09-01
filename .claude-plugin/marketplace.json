@@ -1,0 +1,16 @@
+{
+  "name": "athena-bda",
+  "owner": {
+    "name": "Athena BDA",
+    "email": "support@athenabda.com"
+  },
+  "metadata": {
+    "description": "Athena BDA's own skills for working with the Contact Portal and Intelligence Hub: set-up, ask-the-data pulls, the what's-next briefing, playbook-based drafting, conference plays, and a rep's first session."
+  },
+  "plugins": [
+    {
+      "name": "athena",
+      "source": "./plugins/athena"
+    }
+  ]
+}

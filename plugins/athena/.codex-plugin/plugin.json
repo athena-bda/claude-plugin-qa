@@ -1,0 +1,26 @@
+{
+  "name": "athena",
+  "version": "1.1.2",
+  "description": "Athena's skills for working with the Contact Portal and Intelligence Hub connectors: set up / tune, ask the data, what's next?, draft with the playbook, conference play, and a rep's first contact.",
+  "author": {
+    "name": "Athena BDA",
+    "email": "support@athenabda.com"
+  },
+  "keywords": ["athena", "contacts", "life-sciences", "business-development"],
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json",
+  "interface": {
+    "displayName": "Athena BDA",
+    "shortDescription": "Life-sciences BD contacts, briefings and outreach",
+    "longDescription": "Work with Athena's Contact Portal and Intelligence Hub from your assistant: scoped briefings on what has changed, counted lists and saved views of the contacts you care about, playbook-grounded outreach drafts, and conference plays that join speaker intelligence to your own contacts.",
+    "developerName": "Athena BDA",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "logo": "./assets/logo.png",
+    "defaultPrompt": [
+      "What's changed for me since last month?",
+      "Build me a list of my top-tier contacts.",
+      "Who should I meet at the next big conference?"
+    ]
+  }
+}

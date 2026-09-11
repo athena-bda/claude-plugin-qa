@@ -1,6 +1,6 @@
 {
   "name": "athena",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Athena's skills for working with the Contact Portal and Intelligence Hub connectors: set up / tune, ask the data, what's next?, draft with the playbook, conference play, and a rep's first contact.",
   "author": {
     "name": "Athena BDA",

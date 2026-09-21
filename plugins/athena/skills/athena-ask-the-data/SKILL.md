@@ -22,12 +22,21 @@ conversation.
 `athena_orient` also carries this connector's vocabulary and safety rules. Two of them get broken
 exactly here, in the pull, so they are worth repeating:
 
-- **Scores have three states.** A `lead_score` of 0 is a real score at the bottom of the ranking,
-  **absent** means never scored, and a `lead_score_tier` of `"N/A"` means the person's role type is
-  deliberately not relevant to this client. Never fold "absent" into "zero", and never present an
-  `"N/A"` person as merely unscored.
-- **Tier names only.** Pass a tier through exactly as it arrives. Never turn one into a number, a band
-  or a percentile, never rank arithmetically, never recompute one. Athena scores; you read.
+- **Scores have three states, and one number.** `lead_score_standardized` is the only lead score you
+  will see or say. `lead_score_standardized` absent means not scored on this client's standardised
+  scale. `lead_score_standardized` 0 with a tier is a REAL score, at the bottom of the ranking.
+  `lead_score_standardized` 0 with `lead_score_tier` "N/A" means one of this client's own scoring
+  rules ruled the person out: a value they marked as unwanted, with nothing scored to outweigh it.
+  Say "ruled out by your scoring rules", never "unscored", and keep them out of priority lists. A
+  ruled-out person's score is 0 too, so the TIER is the only thing that tells the two apart. N/A on a
+  data field — therapy area, remit, and so on — is a different thing entirely: it means Athena has no
+  information. Say "unknown", and never exclude anyone on it. Never fold absent into zero.
+- **Tier names only**, exactly as they arrive. Never turn one into a number, a band or a percentile,
+  and never recompute a score. A tier is a LABEL, never a filter of its own: prioritise by
+  `lead_score_standardized`, present the tier name beside it, and never make a tier the sole reason
+  to include or leave someone out. "Highest priority" means the top of the score ordering, not one
+  named tier. When someone asks for a count, walk down the score ordering until you have that many
+  and say each one's tier as you go — a High at 51 and a Medium at 50 are neighbours.
 
 **Use the user's other tools.** If their CRM or calendar is connected, use it — checking whether a
 name is already an open opportunity, or already met, makes the answer better. Athena is not trying to
@@ -40,9 +49,12 @@ Before turning a description into a filter, find out what words the data actuall
 geographies, the role types, the connection types. Map the user's phrasing onto those, and do not
 invent a value that is not there.
 
-"High-quality" is not a field. It resolves to a **named tier** the facet returns (an Apex, a Launch
-Leader, whatever this client's ladder is). If the mapping is not obvious, say what you found and let
-the user pick, rather than guessing which tier they meant.
+"High-quality" is not a field, and it is not one named tier either. It resolves to the **top of the
+score ordering**: order by `lead_score_standardized`, say each person's tier name beside their score,
+and honour a requested count by walking down that ordering until you have it. Cutting at a tier
+boundary drops the people just outside it, who are usually exactly who was meant. If the ask is
+genuinely ambiguous — a phrase that could mean two different cuts — say what you found and let the
+user pick, rather than guessing.
 
 ## Step 2 — Draft the cut, and COUNT before you commit
 

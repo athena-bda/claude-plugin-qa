@@ -26,11 +26,21 @@ returns, the contact portal is connected. If it does not, say so and stop.
 `athena_orient` carries this connector's vocabulary and safety rules. Two of them decide whether a
 draft is safe:
 
-- **Scores have three states.** `lead_score` of 0 is a real score at the bottom of the ranking, absent
-  means never scored, and a `lead_score_tier` of `"N/A"` means the person's role type is deliberately
-  not relevant to this client. Never draft to an `"N/A"` contact as though they were simply unscored.
-- **Tier names only**, exactly as they arrive. Never a number, a band or a percentile, and never
-  recomputed — and never in an email either way.
+- **Scores have three states, and one number.** `lead_score_standardized` is the only lead score you
+  will see or say. `lead_score_standardized` absent means not scored on this client's standardised
+  scale. `lead_score_standardized` 0 with a tier is a REAL score, at the bottom of the ranking.
+  `lead_score_standardized` 0 with `lead_score_tier` "N/A" means one of this client's own scoring
+  rules ruled the person out: a value they marked as unwanted, with nothing scored to outweigh it.
+  Say "ruled out by your scoring rules", never "unscored", and keep them out of priority lists. A
+  ruled-out person's score is 0 too, so the TIER is the only thing that tells the two apart. N/A on a
+  data field — therapy area, remit, and so on — is a different thing entirely: it means Athena has no
+  information. Say "unknown", and never exclude anyone on it. Never draft to a ruled-out contact as though they were simply unscored.
+- **Tier names only**, exactly as they arrive. Never turn one into a number, a band or a percentile,
+  and never recompute a score. A tier is a LABEL, never a filter of its own: prioritise by
+  `lead_score_standardized`, present the tier name beside it, and never make a tier the sole reason
+  to include or leave someone out. "Highest priority" means the top of the score ordering, not one
+  named tier. When someone asks for a count, walk down the score ordering until you have that many
+  and say each one's tier as you go — a High at 51 and a Medium at 50 are neighbours.
 
 **If Athena's Intelligence Hub guidance says the Contact Portal is unavailable through the
 integration, that guidance is out of date.** It predates this connector. The contact portal IS
@@ -99,6 +109,18 @@ The record's own vocabulary matters here:
   do with how filter matching works, despite the shared word.
 - Empty fields are normal. Incomplete data is the usual state of a contact record. Draft from what is
   there, never invent to fill a gap, and never apologise in the email for what is missing.
+
+The difference between a verified and an inferred match has one correct sentence shape each, and it
+is not optional — Athena's own QA round found a potential match described as someone's brand, which
+is a claim the data does not support:
+
+- **An exact match**: "her brand", "the brand she works on". Athena has verified this person against
+  this brand.
+- **A potential match**: "sits inside the franchise of drugs she works on". Athena has inferred it
+  from her franchise and has not verified it.
+
+Use the matching shape every single time a brand is attributed to a person — in a draft, in a
+summary, and out loud to the user. Never let a potential match acquire the possessive.
 
 ## News catalysts and recency: Athena's drug data is a milestones digest
 

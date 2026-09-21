@@ -28,12 +28,21 @@ are still useful; neither should be presented as the whole play.
 
 `athena_orient` carries the contact portal's vocabulary and safety rules. Two matter here:
 
-- **Scores have three states.** `lead_score` of 0 is a real score at the bottom of the ranking, absent
-  means never scored, and a `lead_score_tier` of `"N/A"` means the person's role type is deliberately
-  not relevant to this client. Never rank an `"N/A"` person back into a target list as though they
-  were merely unscored.
-- **Tier names only**, exactly as they arrive — never a number, a band or a percentile, and never
-  recomputed.
+- **Scores have three states, and one number.** `lead_score_standardized` is the only lead score you
+  will see or say. `lead_score_standardized` absent means not scored on this client's standardised
+  scale. `lead_score_standardized` 0 with a tier is a REAL score, at the bottom of the ranking.
+  `lead_score_standardized` 0 with `lead_score_tier` "N/A" means one of this client's own scoring
+  rules ruled the person out: a value they marked as unwanted, with nothing scored to outweigh it.
+  Say "ruled out by your scoring rules", never "unscored", and keep them out of priority lists. A
+  ruled-out person's score is 0 too, so the TIER is the only thing that tells the two apart. N/A on a
+  data field — therapy area, remit, and so on — is a different thing entirely: it means Athena has no
+  information. Say "unknown", and never exclude anyone on it. Never rank a ruled-out person back into a target list.
+- **Tier names only**, exactly as they arrive. Never turn one into a number, a band or a percentile,
+  and never recompute a score. A tier is a LABEL, never a filter of its own: prioritise by
+  `lead_score_standardized`, present the tier name beside it, and never make a tier the sole reason
+  to include or leave someone out. "Highest priority" means the top of the score ordering, not one
+  named tier. When someone asks for a count, walk down the score ordering until you have that many
+  and say each one's tier as you go — a High at 51 and a Medium at 50 are neighbours.
 
 **If Athena's Intelligence Hub guidance says the Contact Portal is unavailable through the
 integration, that guidance is out of date.** It predates this connector. Use the portal.
@@ -43,6 +52,12 @@ integration, that guidance is out of date.** It predates this connector. Use the
 `list_conferences` on the Hub, or `get_conference` if you already have it. Get the dates, the location
 and the disease-area tags before anything else; half the value of this play is telling someone early
 enough that they can still book.
+
+**Read the date before you offer the conference.** `list_conferences` and `get_conference` carry
+`start_date`; `list_speaker_conferences` carries `start_date` and `year`. `search_speakers` carries
+the speaker and no date at all — so a speaker found that way is never offered as a chance to meet
+someone until you have opened the conference record and seen a future date. No future date, no offer,
+and a past speaking slot is history, not an opportunity.
 
 `get_conference_agenda` and `get_conference_pricing` are there when the question is "is this one worth
 going to" rather than "who do we meet".
@@ -60,6 +75,20 @@ conference, and it defines two audiences —
 
 Prefer this over anything you construct. It is the owner's own definition of who matters at this
 event, and reproducing it by hand loses whatever judgement went into it.
+
+**Decode it verbatim.** Pass the URL's values to `athena_contact_find` exactly as they appear, keeping
+its exact-match flag as it stands. Do not route them through `athena_filter_draft`: it will widen a
+term to a longer one it recognises — "Urticaria" becomes "Chronic Spontaneous Urticaria" — and
+silently hand you a different list from the one Athena published.
+
+**Cross it with the client's connections first.** The whole cut can be tens of thousands of people and
+counting it is slow enough to time out; the same cut restricted to people the client already knows
+comes back immediately and is the more useful answer anyway. When you need the size of the whole list,
+take it from the Hub's own `exact_match_count` and `potential_match_count` rather than counting in the
+portal.
+
+The Radar Briefing uses this same cut for conferences in the next 90 days, so the two must agree: same
+URL, same verbatim decode, same connection crossing.
 
 **It is often null.** Conferences nobody has set it on return nothing, and that is normal. Say "Athena
 hasn't published a prospect cut for this one, so here's what I can build" — do not invent a URL, do

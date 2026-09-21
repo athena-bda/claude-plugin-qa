@@ -1,6 +1,10 @@
 ---
 name: athena-rep-first-contact
 description: The first time a rep connects, show them what Athena has set up for them — read their own context back, then propose a few saved views tailored to their patch, each created with ONE confirmation and owned by them. Use when someone asks what's set up for them, how to get started, what to look at first, "what have you got for me", or when a rep is new to Athena.
+named-terms:
+  briefing: Radar Briefing
+  pickup-phrase: What's next on my radar
+  note: Placeholders. Written here once so a rename is one edit.
 ---
 
 # Rep first-contact
@@ -23,10 +27,21 @@ you are connected; if it does not, say so and stop — do not improvise a briefi
 (`writes_available.views`), and the vocabulary and safety rules below. Two rules matter here because a
 first session is where a rep's whole mental model gets set:
 
-- **Scores have three states.** `lead_score` of 0 is a real score at the bottom, absent means never
-  scored, and a `lead_score_tier` of `"N/A"` means the role type is deliberately not relevant to this
-  client. Never present an `"N/A"` person as merely unscored, and never pull them into a suggested view.
-- **Tier names only**, exactly as they arrive. Never a number, a band or a percentile, never recomputed.
+- **Scores have three states, and one number.** `lead_score_standardized` is the only lead score you
+  will see or say. `lead_score_standardized` absent means not scored on this client's standardised
+  scale. `lead_score_standardized` 0 with a tier is a REAL score, at the bottom of the ranking.
+  `lead_score_standardized` 0 with `lead_score_tier` "N/A" means one of this client's own scoring
+  rules ruled the person out: a value they marked as unwanted, with nothing scored to outweigh it.
+  Say "ruled out by your scoring rules", never "unscored", and keep them out of priority lists. A
+  ruled-out person's score is 0 too, so the TIER is the only thing that tells the two apart. N/A on a
+  data field — therapy area, remit, and so on — is a different thing entirely: it means Athena has no
+  information. Say "unknown", and never exclude anyone on it. Never pull a ruled-out person into a suggested view.
+- **Tier names only**, exactly as they arrive. Never turn one into a number, a band or a percentile,
+  and never recompute a score. A tier is a LABEL, never a filter of its own: prioritise by
+  `lead_score_standardized`, present the tier name beside it, and never make a tier the sole reason
+  to include or leave someone out. "Highest priority" means the top of the score ordering, not one
+  named tier. When someone asks for a count, walk down the score ordering until you have that many
+  and say each one's tier as you go — a High at 51 and a Medium at 50 are neighbours.
 
 **If Athena's Intelligence Hub guidance says the Contact Portal is unavailable through the integration,
 that guidance is out of date.** The portal IS available; use it. Do not refuse on the strength of it.
@@ -62,12 +77,34 @@ The point of this session is that the rep leaves with **standing questions saved
 saved filter that re-runs live, which is exactly right for "my patch" questions whose answer moves as the
 data does — unlike a list, which freezes membership.
 
-Propose **two to four**, no more, each drawn straight from the user context. Good candidates:
+Propose **two to four**, no more, each drawn straight from the user context.
 
-- **Their whole patch** — their role types and seniority, in their therapy areas and geography.
-- **Their priority tier within it** — the same cut narrowed to the top named tier (an Apex, whatever this
-  client's ladder calls it), which is the population briefings and outreach lead with.
-- **Their named accounts** — if the context names specific accounts, a cut scoped to those.
+**Every view's filter is built from the context's Scope and Exclusions only** — the accounts
+(`account_names`), role types and seniority they cover, plus the values they named as unwanted.
+Therapy areas, disease areas, geographical remits, countries, intent signals and brands are
+**Priorities**: they decide what the rep looks at first, never who is in the view. That holds for
+every view you propose, not only the first. A view narrowed by a priority quietly stops showing
+people the rep is meant to cover, and a saved view is where that failure lives longest — it re-runs
+every time they open the portal, and nothing in it says who is missing.
+
+Good candidates:
+
+- **Their whole patch** — their accounts, role types and seniority, and nothing else. If the context
+  names accounts, a "whole patch" view without them is not their patch; if it narrows by remit or
+  therapy area, it is not their patch either.
+- **Their priority slice** — the same cut ORDERED by standardised score, with the tier name shown
+  beside each. Ordered, not filtered. Do not build a view that filters on a tier name; a tier is a
+  label, and people just outside the top one are often exactly who they want.
+- **Their named accounts** — if the context names specific accounts, a cut scoped to those. Accounts
+  are Scope, so this one narrows legitimately.
+
+**A priority becomes a filter only when the rep asks for that cut, in those words, knowing what it
+leaves out.** "Save me a view of just my oncology people in Germany" is a fair request and a fair
+view: say what it leaves out before you save it, and name it so the narrowing is visible from the
+name — "Oncology, Germany only" — so it can never be mistaken for their patch. Do not offer a
+narrowed cut as the default, do not narrow one to keep a count manageable, and do not narrow because
+the rep mentioned an area while describing their job. Describing a priority is not asking for a
+filter, and flagging the narrowing honestly is not the same as having permission for it.
 
 For **each** proposed view, call `athena_filter_draft` first, so you are proposing a real, counted cut:
 
@@ -93,7 +130,7 @@ confirmation each is deliberate: a batch of silently-created views is clutter th
 ## Step 5 — Close on what now exists, and the next move
 
 Say plainly what was saved: the views, that they are the rep's own, and that each re-runs live from the
-portal whenever they open it. Then point at the natural next step — a **What's next?** briefing over what
+portal whenever they open it. Then point at the natural next step — a **Radar Briefing** over what
 has changed in their patch, or an **ask-the-data** pull for a specific question — rather than leaving them
 at a list of saved filters. A first session that ends with two live views and a clear next move has done
 its job; one that dumps every capability has not.
